@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {getPostIds} from '../utils/api'
 
 function PostsList({posts}) {
   return (
@@ -29,8 +30,15 @@ export default class Posts extends React.Component {
     posts: [{id: 22, title:'toto'},{id: 23, title: 'titi'}]
   }
 
-  render() {
+  componentDidMount = () => {
     const { category } = this.props
+
+    getPostIds(category).then((data) => {
+      debugger
+    })
+  }
+
+  render() {
     const { posts } = this.state
     return (
       <>
