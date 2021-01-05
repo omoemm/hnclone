@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getPosts } from '../utils/api'
+import { getPosts, getPostIds } from '../utils/api'
 
 function PostsList({ posts }) {
   return (
@@ -34,21 +34,27 @@ export default class Posts extends React.Component {
 
   componentDidMount = () => {
     const { category } = this.props
-
-    const postsPromise = getPosts(category)
-    postsPromise.then((data) => {
-      this.setState({posts: data})
-    })
-    postsPromise.catch((e) => {
+    getPosts(category)
+    .then(
+      posts => {this.setState({ posts })}
+    )
+    .catch((e) => {
       console.warn('Error fetching posts: ', e)
-      this.setState({error: `There was an error fetching the posts`})
+      this.setState({ error: `There was an error fetching the posts` })
     })
+
+  }
+
+  isLoading = () => {
+    const { posts, error } = this.state
+    return !posts.length && error === null
   }
 
   render() {
     const { posts, error } = this.state
     return (
       <>
+        {this.isLoading() && <p>LOADING ...</p>}
         {error && <p className='center-text error'>{error}</p>}
         {posts && <PostsList posts={posts} />}
       </>

@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Nav from './components/Nav'
 import Posts from './components/Posts'
 
-const Top = <Posts category='top' />
-const New = <Posts category='new' />
 export default class App extends React.Component {
   render() {
     return (
