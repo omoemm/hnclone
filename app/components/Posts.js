@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Loading from './Loading'
 import { getPosts, getPostIds } from '../utils/api'
 
 function PostsList({ posts }) {
@@ -54,7 +55,7 @@ export default class Posts extends React.Component {
     const { posts, error } = this.state
     return (
       <>
-        {this.isLoading() && <p>LOADING ...</p>}
+        {this.isLoading() && <Loading />}
         {error && <p className='center-text error'>{error}</p>}
         {posts && <PostsList posts={posts} />}
       </>
