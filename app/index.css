@@ -56,3 +56,27 @@ li {
   font-size: 20px;
   margin: 50px 0;
 }
+
+.post {
+  margin: 20px 0;
+}
+
+.link {
+  color: rgb(187, 46, 31);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.meta-info {
+  margin-top: 5px;
+  color:gray;
+
+}
+
+.meta-info a{
+  color:black;
+}
+
+.meta-info span {
+  margin-right: 6px;
+}
