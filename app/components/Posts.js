@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {getPostIds} from '../utils/api'
+import { getPosts } from '../utils/api'
 
-function PostsList({posts}) {
+function PostsList({ posts }) {
   return (
     <ul>
-      {posts.map((post) => {
-        const {id, title} = post
+      {posts.map((post, index) => {
+        const postAsJson = JSON.stringify(post)
         return (
-          <li key={id}>
-            {title}
+          // TODO change index to a unique id
+          <li key={index}>
+            {postAsJson}
           </li>
         )
       })}
@@ -27,22 +28,29 @@ export default class Posts extends React.Component {
   }
 
   state = {
-    posts: [{id: 22, title:'toto'},{id: 23, title: 'titi'}]
+    posts: [],
+    error: null
   }
 
   componentDidMount = () => {
     const { category } = this.props
 
-    getPostIds(category).then((data) => {
-      debugger
+    const postsPromise = getPosts(category)
+    postsPromise.then((data) => {
+      this.setState({posts: data})
+    })
+    postsPromise.catch((e) => {
+      console.warn('Error fetching posts: ', e)
+      this.setState({error: `There was an error fetching the posts`})
     })
   }
 
   render() {
-    const { posts } = this.state
+    const { posts, error } = this.state
     return (
       <>
-      {posts && <PostsList posts={posts}/>}
+        {error && <p className='center-text error'>{error}</p>}
+        {posts && <PostsList posts={posts} />}
       </>
     )
   }
