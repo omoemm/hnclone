@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
-
+import { Link } from 'react-router-dom'
 
 function ShortDate({ time }) {
   const date = new Date(time * 1e3)
