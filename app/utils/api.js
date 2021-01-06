@@ -16,20 +16,31 @@ function getPost(id) {
     .then(response => response.json())
 }
 
-function getUser(id) {
-  const endpoint = window.encodeURI(`https://hacker-news.firebaseio.com/v0/user/${id}.json`)
-  return fetch(endpoint)
-    .then(response => response.json())
-}
-
-export function getUserData(id) {
-  return getUser(id)
-}
-
 export function getPosts(category) {
   return getPostIds(category)
     .then((ids) => {
       const slicedIds = ids.slice(0, maxPosts)
       return Promise.all(slicedIds.map(getPost))
     })
+}
+
+function getUserProfile(id) {
+  const endpoint = window.encodeURI(`https://hacker-news.firebaseio.com/v0/user/${id}.json`)
+  return fetch(endpoint)
+    .then(response => response.json())
+}
+
+function getUserPosts(id) {
+  return getUserProfile(id)
+    .then((data) => {
+      const { submitted: postIds } = data
+      return Promise.all(postIds.map(getPost))
+    })
+}
+
+export function getUserData(id) {
+  return Promise.all([
+    getUserProfile(id),
+    getUserPosts(id)
+  ])
 }
