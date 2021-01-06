@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
-import { getPosts, getPostIds } from '../utils/api'
 
 
 function ShortDate({ time }) {
   const date = new Date(time * 1e3)
   return <>{date.toLocaleString()}</>
 }
+
 function PostsList({ posts }) {
   return (
     <ul>
@@ -42,34 +42,18 @@ PostsList.propTypes = {
 
 export default class Posts extends React.Component {
   static propTypes = {
-    category: PropTypes.string.isRequired,
+    posts: PropTypes.array.isRequired,
+    error: PropTypes.string,
   }
 
-  state = {
-    posts: [],
-    error: null
-  }
-
-  componentDidMount = () => {
-    const { category } = this.props
-    getPosts(category)
-      .then(
-        posts => { this.setState({ posts }) }
-      )
-      .catch((e) => {
-        console.warn('Error fetching posts: ', e)
-        this.setState({ error: `There was an error fetching the posts` })
-      })
-
-  }
 
   isLoading = () => {
-    const { posts, error } = this.state
+    const { posts, error } = this.props
     return !posts.length && error === null
   }
 
   render() {
-    const { posts, error } = this.state
+    const { posts, error } = this.props
     return (
       <>
         {this.isLoading() && <Loading />}

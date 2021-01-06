@@ -5,7 +5,7 @@ const activeStyle = {
   color: 'rgb(187, 46, 31)',
 }
 
-export default function Nav() {
+export default function Nav({setCategory}) {
   return (
     <nav className='row space-between'>
       <ul className='row nav'>
@@ -15,7 +15,8 @@ export default function Nav() {
             exact
             activeStyle={activeStyle}
             className='nav-link'
-          >
+            onClick={() => setCategory('top')}
+            >
             Top
             </NavLink>
         </li>
@@ -25,6 +26,7 @@ export default function Nav() {
             exact
             activeStyle={activeStyle}
             className='nav-link'
+            onClick={() => setCategory('new')}
           >
             New
             </NavLink>
