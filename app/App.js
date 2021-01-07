@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Nav from './components/Nav'
 import Posts from './components/Posts'
 import User from './components/User'
+import Post from './components/Post'
 import { getPosts } from './utils/api'
 
 export default class App extends React.Component {
@@ -53,6 +54,7 @@ export default class App extends React.Component {
             <Route exact path="/" render={() => <Posts error={error} posts={posts} />} />
             <Route exact path="/new" render={() => <Posts error={error} posts={posts} />} />
             <Route path="/user" component={User}/>
+            <Route path="/post" component={Post}/>
             <Route render={() => <h1>404</h1>} />
           </Switch>
 
