@@ -74,7 +74,7 @@ export default class Post extends React.Component {
         {post &&
           <PostHeader post={post} />
         }
-        { this.areCommentsLoading() &&
+        { !this.isPostLoading() && this.areCommentsLoading() &&
           <Loading text='Fetching comments' />
         }
         {comments.length > 0 &&
