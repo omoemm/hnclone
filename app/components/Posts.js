@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
-import { Link } from 'react-router-dom'
+import ShortDate from './ShortDate'
 
-function ShortDate({ time }) {
-  const date = new Date(time * 1e3)
-  return <>{date.toLocaleString()}</>
-}
 
 function PostsList({ posts }) {
   return (
