@@ -1,6 +1,6 @@
 import React from 'react'
 import queryString from 'query-string'
-import { getUserData } from '../utils/api'
+import { getItems, getUser } from '../utils/api'
 import Loading from './Loading'
 import ShortDate from './ShortDate'
 import PostsList from './PostsList'
@@ -28,10 +28,20 @@ export default class User extends React.Component {
 
   componentDidMount() {
     const { id } = queryString.parse(this.props.location.search)
+    this.fetchUserAndPosts(id)
+  }
 
-    getUserData(id).then(
-      ([profile, posts]) => {
-        this.setState({ profile, posts })
+  fetchUserAndPosts(id) {
+    getUser(id).then(
+      (user) => {
+        this.setState({ profile: user })
+        const { submitted } = user
+        getItems(submitted).then(
+          (data) => {
+            const posts = data.filter((post) => post.type === 'story')
+            this.setState({posts})
+          }
+        )
       }
     )
   }
