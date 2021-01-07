@@ -9,6 +9,15 @@ function PostHeader({ post }) {
   )
 }
 
+function Comments({ comments }) {
+  return (
+    <>
+      <p>comments exist</p>
+      <p>{comments}</p>
+    </>
+  )
+}
+
 export default class Post extends React.Component {
 
   state = { post: null, comments: [], hasComments: true }
@@ -50,13 +59,17 @@ export default class Post extends React.Component {
     const { post, comments } = this.state
     return (
       <>
-        { this.isPostLoading()
-          ? <Loading text='Fetching post' />
-          : <PostHeader post={post} />
+        { this.isPostLoading() &&
+          <Loading text='Fetching post' />
         }
-        { this.areCommentsLoading()
-          ? <Loading text='Fetching comments' />
-          : <p>{JSON.stringify(comments)}</p>
+        {post &&
+          <PostHeader post={post} />
+        }
+        { this.areCommentsLoading() &&
+          <Loading text='Fetching comments' />
+        }
+        {comments.length > 0 &&
+          <Comments comments={comments} />
         }
       </>
     )
