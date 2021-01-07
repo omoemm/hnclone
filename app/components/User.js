@@ -40,7 +40,6 @@ export default class User extends React.Component {
 
   render() {
     const { profile, posts } = this.state
-    console.log('render')
     return (
       <>
         {this.isLoading()
