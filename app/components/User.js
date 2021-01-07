@@ -6,7 +6,7 @@ import ShortDate from './ShortDate'
 import PostsList from './PostsList'
 
 function UserProfile({ profile }) {
-  const { id, created, karma } = profile
+  const { id, created, karma, about } = profile
   return (
     <>
       <h1>{id}</h1>
@@ -14,6 +14,7 @@ function UserProfile({ profile }) {
         <span>joined <b><ShortDate time={created} /></b></span>
         <span>has <b>{karma}</b> karma</span>
       </div>
+      <p dangerouslySetInnerHTML={{__html: about}} />
     </>
   )
 }
@@ -47,7 +48,7 @@ export default class User extends React.Component {
           : <>
             <UserProfile profile={profile} />
             <h2>Posts</h2>
-            <PostsList posts={posts}/>
+            <PostsList posts={posts} />
           </>
         }
       </>
