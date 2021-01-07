@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import { getUserData } from '../utils/api'
 import Loading from './Loading'
 import ShortDate from './ShortDate'
+import PostsList from './PostsList'
 
 function UserProfile({ profile }) {
   const { id, created, karma } = profile
@@ -47,6 +48,7 @@ export default class User extends React.Component {
           : <>
             <UserProfile profile={profile} />
             <h2>Posts</h2>
+            <PostsList posts={posts}/>
           </>
         }
       </>

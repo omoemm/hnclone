@@ -1,4 +1,5 @@
-const maxPosts = 25;
+const maxPosts = 25
+const postType = 'story'
 
 function getPostIds(category) {
   if (category !== 'top' && category !== 'new') {
@@ -35,6 +36,9 @@ function getUserPosts(id) {
     .then((data) => {
       const { submitted: postIds } = data
       return Promise.all(postIds.map(getPost))
+        .then(data => {
+          return data.filter((post) => post.type === postType)
+        })
     })
 }
 
