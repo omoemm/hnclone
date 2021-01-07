@@ -14,7 +14,7 @@ function UserProfile({ profile }) {
         <span>joined <b><ShortDate time={created} /></b></span>
         <span>has <b>{karma}</b> karma</span>
       </div>
-      <p dangerouslySetInnerHTML={{__html: about}} />
+      <p dangerouslySetInnerHTML={{ __html: about }} />
     </>
   )
 }
@@ -22,8 +22,10 @@ function UserProfile({ profile }) {
 export default class User extends React.Component {
   state = {
     profile: null,
-    posts: []
+    posts: [],
+    hasPosts: true,
   }
+
   componentDidMount() {
     const { id } = queryString.parse(this.props.location.search)
 
@@ -34,22 +36,36 @@ export default class User extends React.Component {
     )
   }
 
-  isLoading = () => {
-    const { posts, profile } = this.state
-    return profile === null && posts.length === 0
+  isProfileLoading = () => {
+    return this.state.profile === null
+  }
+
+  arePostsLoading = () => {
+    const { posts, hasPosts } = this.state
+    return posts.length === 0 && hasPosts
   }
 
   render() {
-    const { profile, posts } = this.state
+    const { profile, posts, hasPosts } = this.state
     return (
       <>
-        {this.isLoading()
-          ? <Loading />
-          : <>
-            <UserProfile profile={profile} />
+        {this.isProfileLoading() &&
+          <Loading text='Fetching user' />
+        }
+        {profile &&
+          <UserProfile profile={profile} />
+        }
+        {!this.isProfileLoading && this.arePostsLoading() &&
+          <Loading text='Fetching posts' />
+        }
+        {posts.length > 0 &&
+          <>
             <h2>Posts</h2>
             <PostsList posts={posts} />
           </>
+        }
+        {!hasPosts &&
+          <p>User has never posted</p>
         }
       </>
     )
