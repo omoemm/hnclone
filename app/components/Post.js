@@ -2,10 +2,10 @@ import React from 'react'
 import queryString from 'query-string'
 import { getItem, getItems } from '../utils/api'
 import Loading from './Loading'
-import ShortDate from './ShortDate'
+import PostMetaInfo from './PostMetaInfo'
 
 function PostHeader({ post }) {
-  const { title, by, descendants, url, time, id } = post
+  const { title, url } = post
   return (
     <>
       <h1 className='header'>
@@ -13,20 +13,7 @@ function PostHeader({ post }) {
           {title}
         </a>
       </h1>
-      <div className='meta-info'>
-        <span>
-          by <a
-          href={`/user?id=${by}`}>
-            {by}
-            </a>
-        </span>
-        <span>
-          on <ShortDate time={time}/>
-        </span>
-        <span>
-          with <a href={`/post?id=${id}`}>{descendants}</a> comments
-        </span>
-      </div>
+      <PostMetaInfo post={post} />
     </>
   )
 }
