@@ -44,12 +44,15 @@ export default class Posts extends React.Component {
 
   render() {
     const { posts, error } = this.state
-    return (
-      <>
-        {this.isLoading() && <Loading />}
-        {error && <p className='center-text error'>{error}</p>}
-        {posts && <PostsList posts={posts} />}
-      </>
-    )
+
+    if (this.isLoading()) {
+      return <Loading />
+    }
+
+    if (error) {
+      return <p className='center-text error'>{error}</p>
+    }
+
+    return <PostsList posts={posts} />
   }
 }
