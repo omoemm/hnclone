@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import queryString from 'query-string'
 import { getItems, getUser } from '../utils/api'
 import Loading from './Loading'
@@ -39,11 +39,16 @@ export default class User extends React.Component {
         getItems(submitted).then(
           (data) => {
             const posts = data.filter((post) => post.type === 'story')
-            this.setState({posts})
+            this.setPosts({ posts })
           }
         )
       }
     )
+  }
+
+  setPosts({ posts }) {
+    this.setState({ hasPosts: posts.length})
+    this.setState({ posts })
   }
 
   isProfileLoading = () => {
@@ -65,17 +70,17 @@ export default class User extends React.Component {
         {profile &&
           <UserProfile profile={profile} />
         }
-        {!this.isProfileLoading && this.arePostsLoading() &&
-          <Loading text='Fetching posts' />
+        {!this.isProfileLoading && this.arePostsLoading()
+          ? <Loading text='Fetching posts' />
+          : <h2>Posts</h2>
         }
         {posts.length > 0 &&
           <>
-            <h2>Posts</h2>
             <PostsList posts={posts} />
           </>
         }
         {!hasPosts &&
-          <p>User has never posted</p>
+          <p>User has not posted yet</p>
         }
       </>
     )
