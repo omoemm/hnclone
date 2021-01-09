@@ -22,9 +22,9 @@ function Comments({ comments }) {
   return (
     <>
       {comments.map((comment) => {
-        const { text } = comment
+        const { text, id } = comment
         return (
-          <div className="comment">
+          <div className="comment" key={id}>
             <MetaInfo item={comment} />
             <p dangerouslySetInnerHTML={{ __html: text }} />
           </div>
