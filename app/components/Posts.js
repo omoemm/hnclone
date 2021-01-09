@@ -16,16 +16,16 @@ export default class Posts extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchPosts()
+    this.fetchMainPosts()
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.category !== this.props.category) {
-      this.fetchPosts()
+      this.fetchMainPosts()
     }
   }
 
-  fetchPosts = () => {
+  fetchMainPosts = () => {
     this.setState({ posts: [] })
     fetchPosts(this.props.category)
       .then(
