@@ -32,6 +32,6 @@ export function getUser(id) {
 }
 
 function truncatedIds(ids) {
-  const maxPosts = 25
+  const maxPosts = 30
   return ids.slice(0, maxPosts)
 }
