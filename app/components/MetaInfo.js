@@ -1,5 +1,6 @@
 import React from 'react'
 import { ThemeConsumer } from '../contexts/theme'
+import { Link } from 'react-router-dom'
 import ShortDate from './ShortDate'
 
 export default function MetaInfo({ item }) {
@@ -10,7 +11,7 @@ export default function MetaInfo({ item }) {
       {({ theme }) => (
         <div className={`meta-info meta-info-${theme}`}>
           <span>
-            by <a href={`/user?id=${by}`}>{by}</a>
+            by <Link to={`/user?id=${by}`}>{by}</Link>
           </span>
           <span>
             on {<ShortDate time={time} />}
@@ -18,7 +19,7 @@ export default function MetaInfo({ item }) {
           {
             descendants !== undefined &&
             <span>
-              with <a href={`/post?id=${id}`}>{descendants}</a> comments
+              with <Link to={`/post?id=${id}`}>{descendants}</Link> comments
           </span>
           }
         </div>
