@@ -21,6 +21,7 @@ function UserProfile({ profile }) {
 
 export default class User extends React.Component {
   state = {
+    error:null,
     profile: null,
     posts: [],
     hasPosts: true,
@@ -35,19 +36,21 @@ export default class User extends React.Component {
     getUser(id).then(
       (user) => {
         this.setState({ profile: user })
-        const { submitted } = user
-        getItems(submitted).then(
-          (data) => {
-            const posts = data.filter((post) => post.type === 'story')
-            this.setPosts({ posts })
-          }
-        )
+
+        return getItems(user.submitted)
       }
-    )
+    ).then(
+      (data) => {
+        const posts = data.filter((post) => post.type === 'story')
+        this.setPosts({ posts })
+      }
+    ).catch(({ message }) => this.setState({
+      error: message
+    }))
   }
 
   setPosts({ posts }) {
-    this.setState({ hasPosts: posts.length})
+    this.setState({ hasPosts: posts.length })
     this.setState({ posts })
   }
 
@@ -61,7 +64,13 @@ export default class User extends React.Component {
   }
 
   render() {
-    const { profile, posts, hasPosts } = this.state
+    const { profile, posts, hasPosts, error } = this.state
+
+    if (error) {
+      return <p className='center-text error'>{error}</p>
+    }
+
+
     return (
       <>
         {this.isProfileLoading() &&
