@@ -1,12 +1,14 @@
 import React from 'react'
 import './index.css'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Nav from './components/Nav'
-import Posts from './components/Posts'
-import User from './components/User'
-import Post from './components/Post'
 import { getPosts } from './utils/api'
 import { ThemeProvider } from './contexts/theme'
+import Nav from './components/Nav'
+import Loading from './components/Loading'
+
+const Posts = React.lazy(() => import('./components/Posts'))
+const User = React.lazy(() => import('./components/User'))
+const Post = React.lazy(() => import('./components/Post'))
 
 export default class App extends React.Component {
 
@@ -59,13 +61,17 @@ export default class App extends React.Component {
           <div className={`${theme}`}>
             <div className='container'>
               <Nav setCategory={this.setCategory} />
-              <Switch>
-                <Route exact path="/" render={() => <Posts error={error} posts={posts} />} />
-                <Route exact path="/new" render={() => <Posts error={error} posts={posts} />} />
-                <Route path="/user" component={User} />
-                <Route path="/post" component={Post} />
-                <Route render={() => <h1>404</h1>} />
-              </Switch>
+
+              <React.Suspense fallback={<Loading />}>
+                <Switch>
+                  <Route exact path="/" render={() => <Posts error={error} posts={posts} />} />
+                  <Route path="/new" render={() => <Posts error={error} posts={posts} />} />
+                  <Route path="/user" component={User} />
+                  <Route path="/post" component={Post} />
+                  <Route render={() => <h1>404</h1>} />
+                </Switch>
+              </React.Suspense>
+
             </div>
           </div>
         </ThemeProvider>
