@@ -16,6 +16,16 @@ li {
   list-style-type: none;
 }
 
+.dark {
+  color: #DADADA;
+  background: #1c2022;
+  min-height: 100%;
+}
+
+.dark a {
+  color: rgb(203, 203, 203);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -70,7 +80,6 @@ li {
 .meta-info {
   margin-top: 5px;
   color:gray;
-
 }
 
 .meta-info a{
@@ -79,6 +88,10 @@ li {
 
 .meta-info span {
   margin-right: 6px;
+}
+
+.meta-info-dark a{
+  color:#bebebe;
 }
 
 .comment {
