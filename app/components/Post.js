@@ -36,7 +36,12 @@ function Comments({ comments }) {
 
 export default class Post extends React.Component {
 
-  state = { post: null, comments: [], hasComments: true }
+  state = {
+    post: null,
+    comments: [],
+    hasComments: true,
+    error: null,
+  }
 
   componentDidMount() {
     const { id } = queryString.parse(this.props.location.search)
@@ -47,20 +52,15 @@ export default class Post extends React.Component {
     getItem(id).then(
       (post) => {
         this.setState({ post })
-
-        if (post.kids) {
-          getItems(post.kids).then(
-            (comments) => {
-              const notDeletedcomments = comments.filter((comment) => !comment.deleted)
-              this.setState({ comments:notDeletedcomments })
-            }
-          )
-        }
-        else {
-          this.setState({ hasComments: false })
-        }
+        this.setState({ hasComments: post.kids !== undefined})
+        return getItems(post.kids || [])
       }
-    )
+    ).then(
+        (comments) => {
+          const notDeletedcomments = comments.filter((comment) => !comment.deleted)
+          this.setState({ comments:notDeletedcomments })
+        }
+      )
   }
 
   isPostLoading() {
@@ -73,7 +73,12 @@ export default class Post extends React.Component {
   }
 
   render() {
-    const { post, comments } = this.state
+    const { post, comments, error } = this.state
+
+    if (error) {
+      return <p className='center-text error'>{error}</p>
+    }
+
     return (
       <>
         { this.isPostLoading() &&
