@@ -3,6 +3,7 @@ import ShortDate from './ShortDate'
 
 export default function MetaInfo({ item }) {
   const { id, by, time, descendants } = item
+
   return (
     <div className="meta-info">
       <span>
@@ -12,11 +13,10 @@ export default function MetaInfo({ item }) {
         on {<ShortDate time={time} />}
       </span>
       {
-        descendants &&
+        descendants !== undefined &&
         <span>
           with <a href={`/post?id=${id}`}>{descendants}</a> comments
         </span>
-
       }
     </div>
   )
