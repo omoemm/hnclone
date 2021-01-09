@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { ThemeConsumer } from '../contexts/theme'
 
 const activeStyle = {
@@ -21,7 +21,7 @@ function ButtonTheme({ theme, toggleTheme }) {
   )
 }
 
-export default function Nav({ setCategory }) {
+export default function Nav() {
   return (
     <nav className='row space-between'>
       <ul className='row nav'>
@@ -31,7 +31,6 @@ export default function Nav({ setCategory }) {
             exact
             activeStyle={activeStyle}
             className='nav-link'
-            onClick={() => setCategory('top')}
           >
             Top
             </NavLink>
@@ -42,7 +41,6 @@ export default function Nav({ setCategory }) {
             exact
             activeStyle={activeStyle}
             className='nav-link'
-            onClick={() => setCategory('new')}
           >
             New
             </NavLink>
