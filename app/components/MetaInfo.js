@@ -1,8 +1,8 @@
 import React from 'react'
 import ShortDate from './ShortDate'
 
-export default function PostMetaInfo({post}) {
-  const { id, by, time, descendants } = post
+export default function MetaInfo({ item }) {
+  const { id, by, time, descendants } = item
   return (
     <div className="meta-info">
       <span>
@@ -11,9 +11,13 @@ export default function PostMetaInfo({post}) {
       <span>
         on {<ShortDate time={time} />}
       </span>
-      <span>
-        with <a href={`/post?id=${id}`}>{descendants}</a> comments
-      </span>
+      {
+        descendants &&
+        <span>
+          with <a href={`/post?id=${id}`}>{descendants}</a> comments
+        </span>
+
+      }
     </div>
   )
 }

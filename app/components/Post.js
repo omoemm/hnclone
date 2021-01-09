@@ -2,7 +2,7 @@ import React from 'react'
 import queryString from 'query-string'
 import { getItem, getItems } from '../utils/api'
 import Loading from './Loading'
-import PostMetaInfo from './PostMetaInfo'
+import MetaInfo from './MetaInfo'
 
 function PostHeader({ post }) {
   const { title, url } = post
@@ -13,7 +13,7 @@ function PostHeader({ post }) {
           {title}
         </a>
       </h1>
-      <PostMetaInfo post={post} />
+      <MetaInfo item={post} />
     </>
   )
 }
@@ -21,8 +21,15 @@ function PostHeader({ post }) {
 function Comments({ comments }) {
   return (
     <>
-      <p>comments exist</p>
-      <p></p>
+      {comments.map((comment) => {
+        const { text } = comment
+        return (
+          <div className="comment">
+            <MetaInfo item={comment} />
+            <p dangerouslySetInnerHTML={{ __html: text }} />
+          </div>
+        )
+      })}
     </>
   )
 }
@@ -44,7 +51,8 @@ export default class Post extends React.Component {
         if (post.kids) {
           getItems(post.kids).then(
             (comments) => {
-              this.setState({ comments })
+              const notDeletedcomments = comments.filter((comment) => !comment.deleted)
+              this.setState({ comments:notDeletedcomments })
             }
           )
         }

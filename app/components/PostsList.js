@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PostMetaInfo from './PostMetaInfo'
+import MetaInfo from './MetaInfo'
 
 export default function PostsList({ posts }) {
   return (
@@ -12,7 +12,7 @@ export default function PostsList({ posts }) {
             <a className="link" href={url}>
               {title}
             </a>
-            <PostMetaInfo post={post} />
+            <MetaInfo item={post} />
           </li>
         )
       })}

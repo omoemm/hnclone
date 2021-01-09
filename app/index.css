@@ -80,3 +80,10 @@ li {
 .meta-info span {
   margin-right: 6px;
 }
+
+.comment {
+  background: rgba(128, 128, 128, 0.1411764);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
