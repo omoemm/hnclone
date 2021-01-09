@@ -1,6 +1,6 @@
 import React from 'react'
 import queryString from 'query-string'
-import { getItem, getItems } from '../utils/api'
+import { fetchItem, fetchItems } from '../utils/api'
 import Loading from './Loading'
 import MetaInfo from './MetaInfo'
 
@@ -49,11 +49,11 @@ export default class Post extends React.Component {
   }
 
   fetchPostAndComments(id) {
-    getItem(id).then(
+    fetchItem(id).then(
       (post) => {
         this.setState({ post })
         this.setState({ hasComments: post.kids !== undefined})
-        return getItems(post.kids || [])
+        return fetchItems(post.kids || [])
       }
     ).then(
         (comments) => {

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
 import PostsList from './PostsList'
-import { getPosts } from '../utils/api'
+import { fetchPosts } from '../utils/api'
 
 
 export default class Posts extends React.Component {
@@ -27,7 +27,7 @@ export default class Posts extends React.Component {
 
   fetchPosts = () => {
     this.setState({ posts: [] })
-    getPosts(this.props.category)
+    fetchPosts(this.props.category)
       .then(
         posts => { this.setState({ posts }) }
       )

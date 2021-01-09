@@ -1,29 +1,28 @@
-export function getItem(id) {
-  const endpoint = window.encodeURI(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
-  return fetch(endpoint)
+const api = "https://hacker-news.firebaseio.com/v0"
+
+export function fetchItem(id) {
+  return fetch(`${api}/item/${id}.json`)
     .then(response => response.json())
 }
 
-export function getItems(ids) {
-  return Promise.all(truncatedIds(ids).map(getItem))
+export function fetchItems(ids) {
+  return Promise.all(truncatedIds(ids).map(fetchItem))
 }
 
-export function getPosts(category) {
-  return getPostIds(category)
+export function fetchPosts(category) {
+  return fetchPostIds(category)
     .then((ids) => {
-      return Promise.all(truncatedIds(ids).map(getItem))
+      return Promise.all(truncatedIds(ids).map(fetchItem))
     })
 }
 
-function getPostIds(category) {
-  const endpoint = window.encodeURI(`https://hacker-news.firebaseio.com/v0/${category}stories.json`)
-  return fetch(endpoint)
+function fetchPostIds(category) {
+  return fetch(`${api}/${category}stories.json`)
     .then(response => response.json())
 }
 
-export function getUser(id) {
-  const endpoint = window.encodeURI(`https://hacker-news.firebaseio.com/v0/user/${id}.json`)
-  return fetch(endpoint)
+export function fetchUser(id) {
+  return fetch(`${api}/user/${id}.json`)
     .then(response => response.json())
 }
 

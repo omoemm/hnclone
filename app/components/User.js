@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import queryString from 'query-string'
-import { getItems, getUser } from '../utils/api'
+import { fetchItems, fetchUser } from '../utils/api'
 import Loading from './Loading'
 import ShortDate from './ShortDate'
 import PostsList from './PostsList'
@@ -33,11 +33,11 @@ export default class User extends React.Component {
   }
 
   fetchUserAndPosts(id) {
-    getUser(id).then(
+    fetchUser(id).then(
       (user) => {
         this.setState({ profile: user })
 
-        return getItems(user.submitted)
+        return fetchItems(user.submitted)
       }
     ).then(
       (data) => {
